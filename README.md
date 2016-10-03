@@ -4,7 +4,7 @@
 Collaboration of Junits
 
 ## Installation
-Download
+Clone or download button in the top right of the section. Or copy and paste
 
 ## Usage
 Place in Eclipse/Intellij and run Junits per usual.
