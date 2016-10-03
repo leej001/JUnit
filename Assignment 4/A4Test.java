@@ -320,4 +320,35 @@ public class A4Test {
 
         }
     }
+
+
+
+    //getters and setters testing
+
+    @Test
+    public void subPictureGetterSetterTest(){
+        Picture picture = new PictureImpl(5,5);
+        picture.setPixel(1,2,new GrayPixel(.3));
+        Picture sub = picture.extract(1,2,2,2);
+        sub.setPixel(1,1, new GrayPixel(.8));
+        double output = 1.1;
+        double a = sub.getPixel(0, 0).getIntensity();
+        double b = picture.getPixel(2, 3).getIntensity();
+        assertEquals(output, a+b, .001);
+    }
+
+    @Test
+    public void horizontalPictureGetterSetterTest(){
+        Picture picture = new PictureImpl(5,5);
+        Picture picture1 = new PictureImpl(10,5);
+        picture.setPixel(4,1, new GrayPixel(.1));
+        picture1.setPixel(0,1, new GrayPixel(.9));
+        Picture horPic = new HorizontalStackPicture(picture, picture1);
+        double a = horPic.getPixel(4, 1).getIntensity();
+        double b = horPic.getPixel(5, 1).getIntensity();
+        double answer = 1.0;
+        assertEquals(answer, a + b, .001);
+    }
+
+
 }
