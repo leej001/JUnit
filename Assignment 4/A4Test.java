@@ -425,5 +425,29 @@ public class A4Test {
         }
     }
 
+    @Test
+    public void setPixelNullTest(){
+        Picture picture = new PictureImpl(4,4);
+        try{
+            picture.setPixel(0,0, null);
+            fail("Setting pixel to null should not work");
+        }catch (IllegalArgumentException e){
+
+        }
+
+    }
+    @Test
+    public void setPixelNullDelegateTest(){
+        Picture picture = new PictureImpl(4,4);
+        Picture picture1 = picture.extract(0,0,2,2);
+        try{
+            picture1.setPixel(1,1, null);
+            fail("Setting pixel to null should not work");
+        }catch (IllegalArgumentException e){
+
+        }
+
+    }
+
 
 }
