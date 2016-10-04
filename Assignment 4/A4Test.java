@@ -31,7 +31,7 @@ public class A4Test {
         try {
             SubPicture picture = new SubPictureImpl(null, 10, 10, 20, 20);
             fail("Subpicture passed null and error not thrown");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
         }
     }
 
@@ -43,13 +43,13 @@ public class A4Test {
         try {
             SubPicture picture = testPicture.extract(-2, 1, 1, 1);
             fail("Subpicture passed xOffset of -2 and did not fail");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
         }
         //yoffset below 0
         try {
             SubPicture picture = testPicture.extract(1, -2, 1, 1);
             fail("Subpicture passed yOffset of -2 and did not fail");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
         }
 
         //xoffset above height
@@ -57,34 +57,34 @@ public class A4Test {
         try {
             SubPicture picture = testPicture.extract(7, 1, 1, 1);
             fail("Subpicture passed xOffset of 7 (0-5) and did not fail");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
         }
         //yoffset above height
 
         try {
             SubPicture picture = testPicture.extract(1, 10, 1, 1);
             fail("Subpicture passed yOffset of 10 (0-5) and did not fail");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
         }
 
         //width and xoffset out of bounds
         try {
             SubPicture picture = testPicture.extract(1, 1, 6, 1);
             fail("Subpicture passed width of 6 + 1 (0-5) and did not fail");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
         }
         //height and yoffset out of bounds
         try {
             SubPicture picture = testPicture.extract(1, 1, 1, 6);
             fail("Subpicture passed width of 6 + 1 (0-5) and did not fail");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
         }
 
         //test super width and super height
         try {
             SubPicture picture = new SubPictureImpl(new PictureImpl(-10, -20), 10, 10, 20, 20);
             fail("Subpicture passed null and error not thrown");
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
         }
 
     }
@@ -316,7 +316,7 @@ public class A4Test {
             Picture transPicture = new TransformedPicture(new PictureImpl(3, 4), new GammaCorrect(.5));
             transPicture.setPixel(1, 1, new GrayPixel(.3));
             fail("Transform should be unable to set a pixel");
-        } catch (Exception e) {
+        } catch (UnsupportedOperationException e) {
 
         }
     }
@@ -372,7 +372,45 @@ public class A4Test {
         try{
             Picture horPic = new HorizontalStackPicture(new PictureImpl(2,2), null);
             fail("Should have caused exception for being passed a null picture.");
-        }catch (Exception e){
+        }catch (IllegalArgumentException e){
+
+        }
+    }
+
+    @Test
+    public void transformedNullTest1(){
+        try{
+            Picture picture = new TransformedPicture(null, new Threshold(.3));
+            fail("Should have caused exception for being passed a null picture.");
+        }catch (IllegalArgumentException e){
+
+        }
+    }
+    @Test
+    public void transformedNullTest2(){
+        try{
+            Picture picture1 = new TransformedPicture(new PictureImpl(3, 3), null);
+            fail("Should have caused exception for being passed a null picture.");
+        }catch (IllegalArgumentException e){
+
+        }
+    }
+    @Test
+    public void thresholdNull(){
+        try{
+            new Threshold(.3).transform(null);
+            fail("Should have caused exception for being passed a null pixel.");
+        }catch (IllegalArgumentException e){
+
+        }
+    }
+    @Test
+    public void gammaNull(){
+
+        try{
+            new GammaCorrect(.3).transform(null);
+            fail("Should have caused exception for being passed a null pixel.");
+        }catch (IllegalArgumentException e){
 
         }
     }
