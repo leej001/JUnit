@@ -350,5 +350,31 @@ public class A4Test {
         assertEquals(answer, a + b, .001);
     }
 
+    @Test
+    public void subPictureBoundingTest(){
+        Picture picture = new PictureImpl(3, 3);
+        picture.setPixel(0, 0, new GrayPixel(.1));
+        picture.setPixel(2, 2, new GrayPixel(.1));
+        Picture sub = picture.extract(2,0,1,3);
+        picture.print();
+        sub.print();
+        String output = "M>>\n" +
+                ">>>\n" +
+                ">>M\n" +
+                ">\n" +
+                ">\n" +
+                "M\n";
+        assertEquals(output, outContent.toString());
+    }
+
+    @Test
+    public void combinedPictureNullTest(){
+        try{
+            Picture horPic = new HorizontalStackPicture(new PictureImpl(2,2), null);
+            fail("Should have caused exception for being passed a null picture.");
+        }catch (Exception e){
+
+        }
+    }
 
 }
