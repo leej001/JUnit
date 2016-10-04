@@ -414,5 +414,16 @@ public class A4Test {
 
         }
     }
+    @Test
+    public void transformNull(){
+        Picture picture = new PictureImpl(10, 10);
+        try{
+            Picture transformedPicture = picture.transform(null);
+            fail("Should have caused exception for being passed a null pixel.");
+        }catch (IllegalArgumentException e){
+
+        }
+    }
+
 
 }
