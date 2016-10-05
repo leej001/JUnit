@@ -449,5 +449,46 @@ public class A4Test {
 
     }
 
+    @Test
+    public void subPictureDimensionsTest() {
+        Picture picture = new PictureImpl(5, 5);
+        try {
+            SubPicture sub1 = new SubPictureImpl(picture, -1, 1, 1, 1);
+            fail("negative xOffset should throw exception");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            SubPicture sub2 = new SubPictureImpl(picture, 5, 1, 1, 1);
+            fail("xOffset >= source width should throw exception");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            SubPicture sub3 = new SubPictureImpl(picture, 1, -1, 1, 1);
+            fail("negative yOffset should throw exception");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            SubPicture sub4 = new SubPictureImpl(picture, 1, 5, 1, 1);
+            fail("yOffset >= source height should throw exception");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            SubPicture sub5 = new SubPictureImpl(picture, 1, 1, 5, 1);
+            fail("dimensions exceeding source width should throw exception");
+        } catch (IllegalArgumentException e) {
+
+        }
+        try {
+            SubPicture sub6 = new SubPictureImpl(picture, 1, 1, 1, 5);
+            fail("dimensions exceed source height should throw exception");
+        } catch (IllegalArgumentException e) {
+
+        }
+    }
+
 
 }
